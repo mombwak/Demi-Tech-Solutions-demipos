@@ -1,0 +1,6 @@
+{
+  "name": "DEMIPOS",
+  "description": "Multi-Tenant, Multi-Business Cloud & Offline POS Platform engineered for Kenya",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
