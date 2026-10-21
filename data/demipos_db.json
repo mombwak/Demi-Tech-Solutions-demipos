@@ -1,0 +1,1009 @@
+{
+  "version": 1,
+  "tenants": [
+    {
+      "id": "tenant-simba-01",
+      "name": "Simba Hospitality & Retail Group",
+      "slug": "simba-group",
+      "kraPin": "P051982736Z",
+      "currency": "KES",
+      "country": "Kenya",
+      "createdAt": "2026-10-21T20:26:18.094Z"
+    }
+  ],
+  "branches": [
+    {
+      "id": "branch-kilimani",
+      "tenantId": "tenant-simba-01",
+      "name": "Kilimani Flagship Bistro & Lounge",
+      "code": "KLM-01",
+      "phone": "+254 712 345 678",
+      "address": "Argwings Kodhek Rd, Nairobi",
+      "etimsDeviceId": "VSCU-KEN-889021",
+      "createdAt": "2026-10-21T20:26:18.094Z"
+    },
+    {
+      "id": "branch-westlands",
+      "tenantId": "tenant-simba-01",
+      "name": "Westlands Sports Bar & Grill",
+      "code": "WST-02",
+      "phone": "+254 722 987 654",
+      "address": "Mpaka Road, Westlands, Nairobi",
+      "etimsDeviceId": "VSCU-KEN-889022",
+      "createdAt": "2026-10-21T20:26:18.094Z"
+    }
+  ],
+  "terminals": [
+    {
+      "id": "term-waiter-01",
+      "branchId": "branch-kilimani",
+      "name": "Waiter Tablet 1 (Garden Terrace)",
+      "terminalCode": "WAITER-TAB-01",
+      "terminalType": "WAITER_TABLET",
+      "station": "FOOD",
+      "lastSeenAt": "2026-10-21T20:26:18.095Z",
+      "isEnrolled": true,
+      "status": "ONLINE",
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "term-waiter-02",
+      "branchId": "branch-kilimani",
+      "name": "Waiter Tablet 2 (Main Dining)",
+      "terminalCode": "WAITER-TAB-02",
+      "terminalType": "WAITER_TABLET",
+      "station": "FOOD",
+      "lastSeenAt": "2026-10-21T20:26:18.095Z",
+      "isEnrolled": true,
+      "status": "ONLINE",
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "term-cashier-01",
+      "branchId": "branch-kilimani",
+      "name": "Main Cashier Till 1",
+      "terminalCode": "MAIN-CASHIER-01",
+      "terminalType": "CASHIER_TILL",
+      "lastSeenAt": "2026-10-21T20:26:18.095Z",
+      "isEnrolled": true,
+      "status": "ONLINE",
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "term-kds-kitchen",
+      "branchId": "branch-kilimani",
+      "name": "Main Kitchen KDS Display",
+      "terminalCode": "KITCHEN-KDS-01",
+      "terminalType": "KITCHEN_KDS",
+      "station": "FOOD",
+      "lastSeenAt": "2026-10-21T20:26:18.095Z",
+      "isEnrolled": true,
+      "status": "ONLINE",
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "term-kds-bar",
+      "branchId": "branch-kilimani",
+      "name": "Sports Bar KDS Display",
+      "terminalCode": "BAR-KDS-01",
+      "terminalType": "BAR_KDS",
+      "station": "BAR",
+      "lastSeenAt": "2026-10-21T20:26:18.095Z",
+      "isEnrolled": true,
+      "status": "ONLINE",
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-faith",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "name": "Faith Mwende",
+      "phone": "+254 711 223 344",
+      "email": "faith@simbagroup.co.ke",
+      "role": "WAITER",
+      "pinHash": "b04571bcbe8c558ac5b5c80449dc48465c27335aa971ad6591c705e3fac9acd4",
+      "permissions": [
+        "orders.create",
+        "orders.edit",
+        "orders.fire",
+        "orders.view_own",
+        "tables.view",
+        "tables.transfer",
+        "split_bill.request"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "usr-brian",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "name": "Brian Otieno",
+      "phone": "+254 722 334 455",
+      "email": "brian@simbagroup.co.ke",
+      "role": "CASHIER",
+      "pinHash": "15bd795f1f039dc9a64825d461d2d40fc34b29850c8797ccf4f3e76d091438d4",
+      "permissions": [
+        "orders.view",
+        "orders.create",
+        "payments.collect",
+        "shifts.open",
+        "shifts.close",
+        "shifts.blind_count",
+        "receipts.print",
+        "receipts.reprint"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "usr-kevin",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "name": "Kevin Kiprop",
+      "phone": "+254 733 445 566",
+      "email": "kevin@simbagroup.co.ke",
+      "role": "BARTENDER",
+      "pinHash": "75db6dbdaf266f65eff8747436c7af48df928935d47bbfbbcd7688e3593163c6",
+      "permissions": [
+        "kot.view_bar",
+        "kot.bump_status",
+        "orders.create",
+        "bar_tabs.manage"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "usr-juma",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "name": "Chef Juma Hassan",
+      "phone": "+254 744 556 677",
+      "email": "juma@simbagroup.co.ke",
+      "role": "CHEF",
+      "pinHash": "6b52bcfb33656afe20a673a54140cb175a6bc4a5e9a73898e71ca9c12ba1747e",
+      "permissions": [
+        "kot.view_kitchen",
+        "kot.bump_status"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "usr-sarah",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "name": "Sarah Wanjiku",
+      "phone": "+254 755 667 788",
+      "email": "sarah@simbagroup.co.ke",
+      "role": "MANAGER",
+      "pinHash": "c7b11381a62fb54005ce293a2cd21307cbd502379c3c98bd79603b7f85c0814a",
+      "permissions": [
+        "orders.create",
+        "orders.edit",
+        "orders.fire",
+        "orders.void",
+        "orders.transfer",
+        "payments.collect",
+        "payments.refund",
+        "discounts.apply",
+        "discounts.approve",
+        "reports.sales.view",
+        "reports.financials.view",
+        "reports.z_report.view",
+        "inventory.view",
+        "inventory.adjust",
+        "inventory.receive",
+        "shifts.manage",
+        "shifts.override"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "usr-david",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "name": "David Omondi",
+      "phone": "+254 700 112 233",
+      "email": "david@simbagroup.co.ke",
+      "role": "OWNER",
+      "pinHash": "bb61df160d86106f824e51c2854405566e7fa57b4c48f8d0b7fd0cc045bc118f",
+      "permissions": [
+        "pos.all",
+        "orders.create",
+        "orders.edit",
+        "orders.fire",
+        "orders.void",
+        "orders.transfer",
+        "payments.collect",
+        "payments.refund",
+        "discounts.apply",
+        "discounts.approve",
+        "reports.sales.view",
+        "reports.financials.view",
+        "reports.z_report.view",
+        "inventory.view",
+        "inventory.adjust",
+        "inventory.receive",
+        "terminals.manage",
+        "staff.manage",
+        "settings.manage"
+      ],
+      "isActive": true,
+      "createdAt": "2026-10-21T20:26:18.095Z"
+    }
+  ],
+  "floorSections": [
+    {
+      "id": "sec-terrace",
+      "branchId": "branch-kilimani",
+      "name": "Garden Terrace",
+      "displayOrder": 1
+    },
+    {
+      "id": "sec-main",
+      "branchId": "branch-kilimani",
+      "name": "Main Dining Floor",
+      "displayOrder": 2
+    },
+    {
+      "id": "sec-bar",
+      "branchId": "branch-kilimani",
+      "name": "Sports Bar & Lounge",
+      "displayOrder": 3
+    },
+    {
+      "id": "sec-vip",
+      "branchId": "branch-kilimani",
+      "name": "VIP Lounge",
+      "displayOrder": 4
+    }
+  ],
+  "tables": [
+    {
+      "id": "tbl-01",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-terrace",
+      "tableNumber": "T-01",
+      "capacity": 4,
+      "status": "OCCUPIED",
+      "currentOrderId": "ord-active-01",
+      "waiterName": "Faith Mwende",
+      "guestCount": 3,
+      "activeOrderTotal": 3850,
+      "occupiedSince": "45 mins ago",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-02",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-terrace",
+      "tableNumber": "T-02",
+      "capacity": 2,
+      "status": "VACANT",
+      "guestCount": 2,
+      "updatedAt": "2026-10-21T20:27:30.693Z"
+    },
+    {
+      "id": "tbl-03",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-terrace",
+      "tableNumber": "T-03",
+      "capacity": 6,
+      "status": "BILLED",
+      "currentOrderId": "ord-active-02",
+      "waiterName": "Faith Mwende",
+      "guestCount": 5,
+      "activeOrderTotal": 8400,
+      "occupiedSince": "1h 15m ago",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-04",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-terrace",
+      "tableNumber": "T-04",
+      "capacity": 4,
+      "status": "VACANT",
+      "updatedAt": "2026-10-21T20:27:30.694Z"
+    },
+    {
+      "id": "tbl-05",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-main",
+      "tableNumber": "M-05",
+      "capacity": 4,
+      "status": "OCCUPIED",
+      "currentOrderId": "ord-active-03",
+      "waiterName": "Faith Mwende",
+      "guestCount": 4,
+      "activeOrderTotal": 5200,
+      "occupiedSince": "20 mins ago",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-06",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-main",
+      "tableNumber": "M-06",
+      "capacity": 6,
+      "status": "VACANT",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-07",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-main",
+      "tableNumber": "M-07",
+      "capacity": 8,
+      "status": "RESERVED",
+      "guestCount": 8,
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-08",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-main",
+      "tableNumber": "M-08",
+      "capacity": 4,
+      "status": "VACANT",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-b1",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-bar",
+      "tableNumber": "Bar-01",
+      "capacity": 2,
+      "status": "OCCUPIED",
+      "currentOrderId": "ord-active-04",
+      "waiterName": "Kevin Kiprop",
+      "guestCount": 2,
+      "activeOrderTotal": 1750,
+      "occupiedSince": "30 mins ago",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-b2",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-bar",
+      "tableNumber": "Bar-02",
+      "capacity": 2,
+      "status": "VACANT",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-b3",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-bar",
+      "tableNumber": "Bar-03",
+      "capacity": 4,
+      "status": "VACANT",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "tbl-v1",
+      "branchId": "branch-kilimani",
+      "sectionId": "sec-vip",
+      "tableNumber": "VIP-01",
+      "capacity": 10,
+      "status": "VACANT",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-active-01",
+      "orderNumber": "ORD-active",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "tableId": "tbl-01",
+      "tableNumber": "T-01",
+      "waiterId": "usr-faith",
+      "waiterName": "Faith Mwende",
+      "orderType": "DINE_IN",
+      "guestCount": 3,
+      "subtotal": 3318.97,
+      "taxTotal": 531.03,
+      "discountTotal": 0,
+      "grandTotal": 3850,
+      "status": "OPEN",
+      "version": 1,
+      "items": [
+        {
+          "id": "item-101",
+          "orderId": "ord-active-01",
+          "productId": "prod-mbuzi-1kg",
+          "productName": "Mbuzi Choma (1 Kg)",
+          "department": "GRILL",
+          "unitPrice": 1600,
+          "quantity": 1,
+          "notes": "Medium rare, extra kachumbari",
+          "seatNumber": 1,
+          "kotStatus": "SENT_TO_KITCHEN"
+        },
+        {
+          "id": "item-102",
+          "orderId": "ord-active-01",
+          "productId": "prod-ugali",
+          "productName": "Ugali Afya (Brown / White)",
+          "department": "FOOD",
+          "unitPrice": 120,
+          "quantity": 2,
+          "notes": "Hot",
+          "seatNumber": 2,
+          "kotStatus": "SENT_TO_KITCHEN"
+        },
+        {
+          "id": "item-103",
+          "orderId": "ord-active-01",
+          "productId": "prod-tusker-lager",
+          "productName": "Tusker Lager 500ml",
+          "department": "BAR",
+          "unitPrice": 350,
+          "quantity": 4,
+          "notes": "Cold from fridge",
+          "seatNumber": 3,
+          "kotStatus": "SENT_TO_KITCHEN"
+        },
+        {
+          "id": "item-104",
+          "orderId": "ord-active-01",
+          "productId": "prod-dawa-cocktail",
+          "productName": "Original Kenyan Dawa Cocktail",
+          "department": "BAR",
+          "unitPrice": 650,
+          "quantity": 1,
+          "notes": "Extra honey",
+          "seatNumber": 1,
+          "kotStatus": "SENT_TO_KITCHEN"
+        }
+      ],
+      "createdAt": "2026-09-19T14:30:00Z",
+      "updatedAt": "2026-09-19T14:30:00Z"
+    },
+    {
+      "id": "ord-active-02",
+      "orderNumber": "ORD-active",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "tableId": "tbl-03",
+      "tableNumber": "T-03",
+      "waiterId": "usr-faith",
+      "waiterName": "Faith Mwende",
+      "orderType": "DINE_IN",
+      "guestCount": 5,
+      "subtotal": 7241.38,
+      "taxTotal": 1158.62,
+      "discountTotal": 0,
+      "grandTotal": 8400,
+      "status": "BILLED",
+      "version": 1,
+      "items": [
+        {
+          "id": "item-201",
+          "orderId": "ord-active-02",
+          "productId": "prod-mbuzi-1kg",
+          "productName": "Mbuzi Choma (1 Kg)",
+          "department": "GRILL",
+          "unitPrice": 1600,
+          "quantity": 2,
+          "seatNumber": 1,
+          "kotStatus": "SERVED"
+        },
+        {
+          "id": "item-202",
+          "orderId": "ord-active-02",
+          "productId": "prod-kuku-choma",
+          "productName": "Kuku Choma (Full)",
+          "department": "GRILL",
+          "unitPrice": 1500,
+          "quantity": 1,
+          "seatNumber": 2,
+          "kotStatus": "SERVED"
+        },
+        {
+          "id": "item-203",
+          "orderId": "ord-active-02",
+          "productId": "prod-chips-masala",
+          "productName": "Chips Masala",
+          "department": "FOOD",
+          "unitPrice": 280,
+          "quantity": 3,
+          "seatNumber": 3,
+          "kotStatus": "SERVED"
+        },
+        {
+          "id": "item-204",
+          "orderId": "ord-active-02",
+          "productId": "prod-tusker-lager",
+          "productName": "Tusker Lager 500ml",
+          "department": "BAR",
+          "unitPrice": 350,
+          "quantity": 8,
+          "seatNumber": 4,
+          "kotStatus": "SERVED"
+        }
+      ],
+      "createdAt": "2026-09-19T13:45:00Z",
+      "updatedAt": "2026-09-19T13:45:00Z"
+    },
+    {
+      "id": "test-ord-1792614378099",
+      "orderNumber": "ORD-TEST-01",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "tableId": "tbl-04",
+      "tableNumber": "T-04",
+      "waiterId": "usr-faith",
+      "waiterName": "Faith Mwende",
+      "orderType": "DINE_IN",
+      "guestCount": 2,
+      "subtotal": 1600,
+      "taxTotal": 256,
+      "discountTotal": 0,
+      "grandTotal": 2206,
+      "status": "PAID",
+      "version": 5,
+      "items": [
+        {
+          "id": "item-1",
+          "orderId": "test-ord-1792614378099",
+          "productId": "prod-mbuzi-1kg",
+          "productName": "Mbuzi Choma 1kg",
+          "department": "GRILL",
+          "unitPrice": 1600,
+          "quantity": 1,
+          "kotStatus": "SENT_TO_KITCHEN",
+          "firedAt": "2026-10-21T20:26:18.123Z"
+        },
+        {
+          "id": "item-2",
+          "orderId": "test-ord-1792614378099",
+          "productId": "prod-tusker-500",
+          "productName": "Tusker Lager",
+          "department": "BAR",
+          "unitPrice": 350,
+          "quantity": 1,
+          "kotStatus": "SENT_TO_KITCHEN",
+          "firedAt": "2026-10-21T20:26:18.123Z"
+        }
+      ],
+      "createdAt": "2026-10-21T20:26:18.099Z",
+      "updatedAt": "2026-10-21T20:26:18.125Z"
+    },
+    {
+      "id": "test-ord-1792614450673",
+      "orderNumber": "ORD-TEST-01",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "tableId": "tbl-04",
+      "tableNumber": "T-04",
+      "waiterId": "usr-faith",
+      "waiterName": "Faith Mwende",
+      "orderType": "DINE_IN",
+      "guestCount": 2,
+      "subtotal": 1600,
+      "taxTotal": 256,
+      "discountTotal": 0,
+      "grandTotal": 2206,
+      "status": "PAID",
+      "version": 5,
+      "items": [
+        {
+          "id": "item-1",
+          "orderId": "test-ord-1792614450673",
+          "productId": "prod-mbuzi-1kg",
+          "productName": "Mbuzi Choma 1kg",
+          "department": "GRILL",
+          "unitPrice": 1600,
+          "quantity": 1,
+          "kotStatus": "SENT_TO_KITCHEN",
+          "firedAt": "2026-10-21T20:27:30.693Z"
+        },
+        {
+          "id": "item-2",
+          "orderId": "test-ord-1792614450673",
+          "productId": "prod-tusker-500",
+          "productName": "Tusker Lager",
+          "department": "BAR",
+          "unitPrice": 350,
+          "quantity": 1,
+          "kotStatus": "SENT_TO_KITCHEN",
+          "firedAt": "2026-10-21T20:27:30.693Z"
+        }
+      ],
+      "createdAt": "2026-10-21T20:27:30.673Z",
+      "updatedAt": "2026-10-21T20:27:30.694Z"
+    }
+  ],
+  "kotTickets": [
+    {
+      "id": "kot-1792614450674-grill-732",
+      "ticketNumber": 2005,
+      "orderId": "test-ord-1792614450673",
+      "tableNumber": "T-02",
+      "waiterName": "Faith Mwende",
+      "station": "GRILL",
+      "items": [
+        {
+          "id": "kitem-1792614450674-0",
+          "orderItemId": "item-1",
+          "productName": "Mbuzi Choma 1kg",
+          "quantity": 1
+        }
+      ],
+      "status": "NEW",
+      "createdAt": "08:27 PM",
+      "updatedAt": "2026-10-21T20:27:30.692Z"
+    },
+    {
+      "id": "kot-1792614450692-bar-354",
+      "ticketNumber": 2006,
+      "orderId": "test-ord-1792614450673",
+      "tableNumber": "T-02",
+      "waiterName": "Faith Mwende",
+      "station": "BAR",
+      "items": [
+        {
+          "id": "kitem-1792614450692-0",
+          "orderItemId": "item-2",
+          "productName": "Tusker Lager",
+          "quantity": 1
+        }
+      ],
+      "status": "NEW",
+      "createdAt": "08:27 PM",
+      "updatedAt": "2026-10-21T20:27:30.693Z"
+    },
+    {
+      "id": "kot-1792614378100-grill-53",
+      "ticketNumber": 2003,
+      "orderId": "test-ord-1792614378099",
+      "tableNumber": "T-02",
+      "waiterName": "Faith Mwende",
+      "station": "GRILL",
+      "items": [
+        {
+          "id": "kitem-1792614378100-0",
+          "orderItemId": "item-1",
+          "productName": "Mbuzi Choma 1kg",
+          "quantity": 1
+        }
+      ],
+      "status": "NEW",
+      "createdAt": "08:26 PM",
+      "updatedAt": "2026-10-21T20:26:18.123Z"
+    },
+    {
+      "id": "kot-1792614378123-bar-603",
+      "ticketNumber": 2004,
+      "orderId": "test-ord-1792614378099",
+      "tableNumber": "T-02",
+      "waiterName": "Faith Mwende",
+      "station": "BAR",
+      "items": [
+        {
+          "id": "kitem-1792614378123-0",
+          "orderItemId": "item-2",
+          "productName": "Tusker Lager",
+          "quantity": 1
+        }
+      ],
+      "status": "NEW",
+      "createdAt": "08:26 PM",
+      "updatedAt": "2026-10-21T20:26:18.123Z"
+    },
+    {
+      "id": "kot-001",
+      "ticketNumber": 1042,
+      "orderId": "ord-active-01",
+      "tableNumber": "T-01",
+      "waiterName": "Faith Mwende",
+      "station": "GRILL",
+      "items": [
+        {
+          "id": "ki-1",
+          "orderItemId": "item-101",
+          "productName": "Mbuzi Choma (1 Kg)",
+          "quantity": 1,
+          "notes": "Medium rare, extra kachumbari",
+          "seatNumber": 1
+        }
+      ],
+      "status": "PREPARING",
+      "createdAt": "18 mins ago",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "kot-002",
+      "ticketNumber": 1043,
+      "orderId": "ord-active-01",
+      "tableNumber": "T-01",
+      "waiterName": "Faith Mwende",
+      "station": "FOOD",
+      "items": [
+        {
+          "id": "ki-2",
+          "orderItemId": "item-102",
+          "productName": "Ugali Afya (Brown / White)",
+          "quantity": 2,
+          "notes": "Hot",
+          "seatNumber": 2
+        }
+      ],
+      "status": "READY",
+      "createdAt": "16 mins ago",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    },
+    {
+      "id": "kot-003",
+      "ticketNumber": 1044,
+      "orderId": "ord-active-01",
+      "tableNumber": "T-01",
+      "waiterName": "Faith Mwende",
+      "station": "BAR",
+      "items": [
+        {
+          "id": "ki-3",
+          "orderItemId": "item-103",
+          "productName": "Tusker Lager 500ml",
+          "quantity": 4,
+          "notes": "Cold from fridge",
+          "seatNumber": 3
+        },
+        {
+          "id": "ki-4",
+          "orderItemId": "item-104",
+          "productName": "Original Kenyan Dawa Cocktail",
+          "quantity": 1,
+          "notes": "Extra honey",
+          "seatNumber": 1
+        }
+      ],
+      "status": "SERVED",
+      "createdAt": "15 mins ago",
+      "updatedAt": "2026-10-21T20:26:18.095Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "sale-1792614450694",
+      "orderId": "test-ord-1792614450673",
+      "invoiceNumber": "INV-TEST-001",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "tableNumber": "T-04",
+      "waiterName": "Faith Mwende",
+      "cashierId": "usr-brian",
+      "cashierName": "Brian Otieno",
+      "subtotal": 1900,
+      "taxTotal": 304,
+      "discountTotal": 0,
+      "grandTotal": 2204,
+      "payments": [
+        {
+          "id": "pay-1",
+          "saleId": "sale-1792614450694",
+          "method": "CASH",
+          "amountTendered": 1204,
+          "amountApplied": 1204,
+          "changeGiven": 0,
+          "status": "SUCCESS",
+          "timestamp": "8:27:30 PM"
+        },
+        {
+          "id": "pay-2",
+          "saleId": "sale-1792614450694",
+          "method": "MPESA",
+          "amountTendered": 1000,
+          "amountApplied": 1000,
+          "changeGiven": 0,
+          "transactionRef": "SBG882910J",
+          "status": "SUCCESS",
+          "timestamp": "8:27:30 PM"
+        }
+      ],
+      "paymentStatus": "PAID",
+      "etimsInvoiceNumber": "ETIMS-DEMI-TEST-001",
+      "etimsQrUrl": "https://etims.kra.go.ke/verify?inv=ETIMS-DEMI-TEST-001&pin=P051982736Z",
+      "createdAt": "2026-10-21T20:27:30.694Z"
+    },
+    {
+      "id": "sale-1792614378124",
+      "orderId": "test-ord-1792614378099",
+      "invoiceNumber": "INV-TEST-001",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "tableNumber": "T-04",
+      "waiterName": "Faith Mwende",
+      "cashierId": "usr-brian",
+      "cashierName": "Brian Otieno",
+      "subtotal": 1900,
+      "taxTotal": 304,
+      "discountTotal": 0,
+      "grandTotal": 2204,
+      "payments": [
+        {
+          "id": "pay-1",
+          "saleId": "sale-1792614378124",
+          "method": "CASH",
+          "amountTendered": 1204,
+          "amountApplied": 1204,
+          "changeGiven": 0,
+          "status": "SUCCESS",
+          "timestamp": "8:26:18 PM"
+        },
+        {
+          "id": "pay-2",
+          "saleId": "sale-1792614378125",
+          "method": "MPESA",
+          "amountTendered": 1000,
+          "amountApplied": 1000,
+          "changeGiven": 0,
+          "transactionRef": "SBG882910J",
+          "status": "SUCCESS",
+          "timestamp": "8:26:18 PM"
+        }
+      ],
+      "paymentStatus": "PAID",
+      "etimsInvoiceNumber": "ETIMS-DEMI-TEST-001",
+      "etimsQrUrl": "https://etims.kra.go.ke/verify?inv=ETIMS-DEMI-TEST-001&pin=P051982736Z",
+      "createdAt": "2026-10-21T20:26:18.125Z"
+    }
+  ],
+  "tillSessions": [
+    {
+      "id": "till-session-klm-01",
+      "branchId": "branch-kilimani",
+      "terminalId": "term-cashier-01",
+      "cashierId": "usr-brian",
+      "cashierName": "Brian Otieno",
+      "openingFloat": 5000,
+      "expectedCash": 18908,
+      "totalMpesa": 34400,
+      "totalCard": 14800,
+      "totalSales": 63108,
+      "status": "OPEN",
+      "openedAt": "Today, 08:00 AM"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "aud-1792614450694-869",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-brian",
+      "actorName": "Brian Otieno",
+      "actorRole": "CASHIER",
+      "action": "SALE_COMPLETED",
+      "entityType": "SALE",
+      "entityId": "sale-1792614450694",
+      "details": "Settled invoice INV-TEST-001 (eTIMS: ETIMS-DEMI-TEST-001), Grand Total: KES 2204",
+      "timestamp": "2026-10-21T20:27:30.694Z"
+    },
+    {
+      "id": "aud-1792614450693-993",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "TABLE_TRANSFERRED",
+      "entityType": "TABLE",
+      "entityId": "tbl-04",
+      "details": "Transferred active order from Table T-02 to Table T-04",
+      "timestamp": "2026-10-21T20:27:30.693Z"
+    },
+    {
+      "id": "aud-1792614450693-965",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "KOT_FIRED",
+      "entityType": "KOT",
+      "entityId": "test-ord-1792614450673",
+      "details": "Fired 2 KOT tickets to kitchen/bar for Table T-02",
+      "timestamp": "2026-10-21T20:27:30.693Z"
+    },
+    {
+      "id": "aud-1792614450674-46",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "ORDER_UPDATED",
+      "entityType": "ORDER",
+      "entityId": "test-ord-1792614450673",
+      "details": "Updated order ORD-TEST-01 (version 2), items: 2, total: 2206",
+      "timestamp": "2026-10-21T20:27:30.674Z"
+    },
+    {
+      "id": "aud-1792614450673-351",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "ORDER_CREATED",
+      "entityType": "ORDER",
+      "entityId": "test-ord-1792614450673",
+      "details": "Created new order ORD-TEST-01 on table T-02",
+      "timestamp": "2026-10-21T20:27:30.673Z"
+    },
+    {
+      "id": "aud-1792614378125-101",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-brian",
+      "actorName": "Brian Otieno",
+      "actorRole": "CASHIER",
+      "action": "SALE_COMPLETED",
+      "entityType": "SALE",
+      "entityId": "sale-1792614378124",
+      "details": "Settled invoice INV-TEST-001 (eTIMS: ETIMS-DEMI-TEST-001), Grand Total: KES 2204",
+      "timestamp": "2026-10-21T20:26:18.125Z"
+    },
+    {
+      "id": "aud-1792614378124-647",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "TABLE_TRANSFERRED",
+      "entityType": "TABLE",
+      "entityId": "tbl-04",
+      "details": "Transferred active order from Table T-02 to Table T-04",
+      "timestamp": "2026-10-21T20:26:18.124Z"
+    },
+    {
+      "id": "aud-1792614378123-920",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "KOT_FIRED",
+      "entityType": "KOT",
+      "entityId": "test-ord-1792614378099",
+      "details": "Fired 2 KOT tickets to kitchen/bar for Table T-02",
+      "timestamp": "2026-10-21T20:26:18.123Z"
+    },
+    {
+      "id": "aud-1792614378100-371",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "ORDER_UPDATED",
+      "entityType": "ORDER",
+      "entityId": "test-ord-1792614378099",
+      "details": "Updated order ORD-TEST-01 (version 2), items: 2, total: 2206",
+      "timestamp": "2026-10-21T20:26:18.100Z"
+    },
+    {
+      "id": "aud-1792614378099-235",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "ORDER_CREATED",
+      "entityType": "ORDER",
+      "entityId": "test-ord-1792614378099",
+      "details": "Created new order ORD-TEST-01 on table T-02",
+      "timestamp": "2026-10-21T20:26:18.099Z"
+    }
+  ],
+  "mpesaTransactions": [],
+  "syncSequence": 110
+}

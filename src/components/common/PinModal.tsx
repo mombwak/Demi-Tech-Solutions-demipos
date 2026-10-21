@@ -20,12 +20,12 @@ export const PinModal: React.FC<PinModalProps> = ({ onClose }) => {
     closePinModal();
   };
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     if (pin.length < 4) {
       setError('Please enter a 4-digit PIN');
       return;
     }
-    const success = verifyPinAndSwitch(pin);
+    const success = await verifyPinAndSwitch(pin);
     if (success) {
       setPin('');
       setError(null);
@@ -35,8 +35,8 @@ export const PinModal: React.FC<PinModalProps> = ({ onClose }) => {
     }
   };
 
-  const handleQuickSelect = (quickPin: string) => {
-    verifyPinAndSwitch(quickPin);
+  const handleQuickSelect = async (quickPin: string) => {
+    await verifyPinAndSwitch(quickPin);
     setPin('');
     setError(null);
   };

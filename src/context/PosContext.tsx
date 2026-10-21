@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { 
   DiningTable, 
   Order, 
@@ -16,6 +16,7 @@ import {
   SEED_TILL_SESSION 
 } from '../data/seedData';
 import { posAudio } from '../utils/formatters';
+import { api } from '../services/apiClient';
 
 export type PosOperatingMode = 'RESTAURANT' | 'RETAIL' | 'KITCHEN_KDS' | 'DASHBOARD';
 
@@ -32,7 +33,7 @@ interface PosContextType {
   offlineQueueCount: number;
   activeTableId: string | null;
   setActiveTableId: (id: string | null) => void;
-  createOrUpdateOrder: (order: Order) => void;
+  createOrUpdateOrder: (order: Order, expectedVersion?: number) => void;
   dispatchKot: (orderId: string, itemsToDispatch: OrderItem[], tableNumber?: string, waiterName?: string) => void;
   bumpKotStatus: (ticketId: string, nextStatus: KotStatus) => void;
   completeSale: (sale: Sale) => void;
@@ -53,11 +54,57 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [offlineQueueCount, setOfflineQueueCount] = useState<number>(0);
   const [activeTableId, setActiveTableId] = useState<string | null>(null);
 
+  const lastSyncSequence = useRef<number>(0);
+
+  // Background Sync Loop: Polling central server every 3s when online
+  useEffect(() => {
+    if (isOffline) return;
+
+    let isMounted = true;
+    const syncWithServer = async () => {
+      try {
+        const response = await api.syncState(lastSyncSequence.current);
+        if (!response || !isMounted) return;
+
+        if (response.sequence) {
+          lastSyncSequence.current = response.sequence;
+        }
+
+        if (!response.upToDate && response.data) {
+          if (response.data.tables) setTables(response.data.tables);
+          if (response.data.orders) {
+            const orderMap: Record<string, Order> = {};
+            response.data.orders.forEach((o: Order) => {
+              orderMap[o.id] = o;
+            });
+            setOrders(orderMap);
+          }
+          if (response.data.kotTickets) {
+            setKotTickets(response.data.kotTickets);
+          }
+          if (response.data.activeTillSession) {
+            setTillSession(response.data.activeTillSession);
+          }
+        }
+      } catch {
+        // Network dropout
+      }
+    };
+
+    syncWithServer();
+    const interval = setInterval(syncWithServer, 3000);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, [isOffline]);
+
   const toggleOffline = () => {
     setIsOffline(prev => !prev);
   };
 
-  const createOrUpdateOrder = (order: Order) => {
+  const createOrUpdateOrder = (order: Order, expectedVersion?: number) => {
+    // 1. Optimistic Local Update for instant touch feedback
     setOrders(prev => ({
       ...prev,
       [order.id]: order
@@ -79,6 +126,19 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           return t;
         })
       );
+    }
+
+    // 2. Dispatch to central backend if online
+    if (!isOffline) {
+      api.saveOrder(order, expectedVersion).catch(err => {
+        if (err.message && err.message.includes('CONCURRENCY_CONFLICT')) {
+          alert('⚠️ Concurrency Notice: This order was updated by another terminal. Your screen has been synchronized with the latest version.');
+        } else {
+          setOfflineQueueCount(c => c + 1);
+        }
+      });
+    } else {
+      setOfflineQueueCount(c => c + 1);
     }
   };
 
@@ -133,7 +193,23 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setKotTickets(prev => [...newTickets, ...prev]);
     posAudio.playKotBell();
 
-    if (isOffline) {
+    if (!isOffline) {
+      api.fireKot(
+        orderId,
+        itemsToDispatch.map(i => ({
+          orderItemId: i.id,
+          productId: i.productId,
+          productName: i.productName,
+          department: i.department,
+          quantity: i.quantity,
+          notes: i.notes,
+          seatNumber: i.seatNumber
+        })),
+        tableNumber
+      ).catch(() => {
+        setOfflineQueueCount(c => c + newTickets.length);
+      });
+    } else {
       setOfflineQueueCount(c => c + newTickets.length);
     }
   };
@@ -148,6 +224,10 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       })
     );
     posAudio.playBeep();
+
+    if (!isOffline) {
+      api.bumpKotStatus(ticketId, nextStatus).catch(() => {});
+    }
   };
 
   const completeSale = (sale: Sale) => {
@@ -200,7 +280,11 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }));
     }
 
-    if (isOffline) {
+    if (!isOffline) {
+      api.settleSale(sale).catch(() => {
+        setOfflineQueueCount(c => c + 1);
+      });
+    } else {
       setOfflineQueueCount(c => c + 1);
     }
   };
@@ -252,6 +336,11 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
 
     posAudio.playBeep();
+
+    if (!isOffline) {
+      api.transferTable(sourceTableId, targetTableId).catch(() => {});
+    }
+
     return true;
   };
 
@@ -263,8 +352,8 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             ...t,
             status: 'VACANT',
             currentOrderId: undefined,
-            activeOrderTotal: undefined,
-            waiterName: undefined
+            waiterName: undefined,
+            activeOrderTotal: undefined
           };
         }
         return t;
@@ -292,7 +381,7 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         bumpKotStatus,
         completeSale,
         transferTable,
-        settleTableOrder
+        settleTableOrder,
       }}
     >
       {children}
