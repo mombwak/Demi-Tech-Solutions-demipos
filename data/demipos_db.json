@@ -41,7 +41,7 @@
       "terminalCode": "WAITER-TAB-01",
       "terminalType": "WAITER_TABLET",
       "station": "FOOD",
-      "lastSeenAt": "2026-10-21T20:26:18.095Z",
+      "lastSeenAt": "2026-10-21T20:58:47.449Z",
       "isEnrolled": true,
       "status": "ONLINE",
       "createdAt": "2026-10-21T20:26:18.095Z"
@@ -286,7 +286,7 @@
       "capacity": 2,
       "status": "VACANT",
       "guestCount": 2,
-      "updatedAt": "2026-10-21T20:27:30.693Z"
+      "updatedAt": "2026-10-21T20:59:23.473Z"
     },
     {
       "id": "tbl-03",
@@ -309,7 +309,7 @@
       "tableNumber": "T-04",
       "capacity": 4,
       "status": "VACANT",
-      "updatedAt": "2026-10-21T20:27:30.694Z"
+      "updatedAt": "2026-10-21T20:59:23.473Z"
     },
     {
       "id": "tbl-05",
@@ -619,9 +619,91 @@
       ],
       "createdAt": "2026-10-21T20:27:30.673Z",
       "updatedAt": "2026-10-21T20:27:30.694Z"
+    },
+    {
+      "id": "test-ord-1792616363453",
+      "orderNumber": "ORD-TEST-01",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "tableId": "tbl-04",
+      "tableNumber": "T-04",
+      "waiterId": "usr-faith",
+      "waiterName": "Faith Mwende",
+      "orderType": "DINE_IN",
+      "guestCount": 2,
+      "subtotal": 1600,
+      "taxTotal": 256,
+      "discountTotal": 0,
+      "grandTotal": 2206,
+      "status": "PAID",
+      "version": 5,
+      "items": [
+        {
+          "id": "item-1",
+          "orderId": "test-ord-1792616363453",
+          "productId": "prod-mbuzi-1kg",
+          "productName": "Mbuzi Choma 1kg",
+          "department": "GRILL",
+          "unitPrice": 1600,
+          "quantity": 1,
+          "kotStatus": "SENT_TO_KITCHEN",
+          "firedAt": "2026-10-21T20:59:23.472Z"
+        },
+        {
+          "id": "item-2",
+          "orderId": "test-ord-1792616363453",
+          "productId": "prod-tusker-500",
+          "productName": "Tusker Lager",
+          "department": "BAR",
+          "unitPrice": 350,
+          "quantity": 1,
+          "kotStatus": "SENT_TO_KITCHEN",
+          "firedAt": "2026-10-21T20:59:23.472Z"
+        }
+      ],
+      "createdAt": "2026-10-21T20:59:23.454Z",
+      "updatedAt": "2026-10-21T20:59:23.473Z"
     }
   ],
   "kotTickets": [
+    {
+      "id": "kot-1792616363455-grill-224",
+      "ticketNumber": 2007,
+      "orderId": "test-ord-1792616363453",
+      "tableNumber": "T-02",
+      "waiterName": "Faith Mwende",
+      "station": "GRILL",
+      "items": [
+        {
+          "id": "kitem-1792616363455-0",
+          "orderItemId": "item-1",
+          "productName": "Mbuzi Choma 1kg",
+          "quantity": 1
+        }
+      ],
+      "status": "NEW",
+      "createdAt": "08:59 PM",
+      "updatedAt": "2026-10-21T20:59:23.472Z"
+    },
+    {
+      "id": "kot-1792616363472-bar-979",
+      "ticketNumber": 2008,
+      "orderId": "test-ord-1792616363453",
+      "tableNumber": "T-02",
+      "waiterName": "Faith Mwende",
+      "station": "BAR",
+      "items": [
+        {
+          "id": "kitem-1792616363472-0",
+          "orderItemId": "item-2",
+          "productName": "Tusker Lager",
+          "quantity": 1
+        }
+      ],
+      "status": "NEW",
+      "createdAt": "08:59 PM",
+      "updatedAt": "2026-10-21T20:59:23.472Z"
+    },
     {
       "id": "kot-1792614450674-grill-732",
       "ticketNumber": 2005,
@@ -772,6 +854,48 @@
   ],
   "sales": [
     {
+      "id": "sale-1792616363473",
+      "orderId": "test-ord-1792616363453",
+      "invoiceNumber": "INV-TEST-001",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "tableNumber": "T-04",
+      "waiterName": "Faith Mwende",
+      "cashierId": "usr-brian",
+      "cashierName": "Brian Otieno",
+      "subtotal": 1900,
+      "taxTotal": 304,
+      "discountTotal": 0,
+      "grandTotal": 2204,
+      "payments": [
+        {
+          "id": "pay-1",
+          "saleId": "sale-1792616363473",
+          "method": "CASH",
+          "amountTendered": 1204,
+          "amountApplied": 1204,
+          "changeGiven": 0,
+          "status": "SUCCESS",
+          "timestamp": "8:59:23 PM"
+        },
+        {
+          "id": "pay-2",
+          "saleId": "sale-1792616363473",
+          "method": "MPESA",
+          "amountTendered": 1000,
+          "amountApplied": 1000,
+          "changeGiven": 0,
+          "transactionRef": "SBG882910J",
+          "status": "SUCCESS",
+          "timestamp": "8:59:23 PM"
+        }
+      ],
+      "paymentStatus": "PAID",
+      "etimsInvoiceNumber": "ETIMS-DEMI-TEST-001",
+      "etimsQrUrl": "https://etims.kra.go.ke/verify?inv=ETIMS-DEMI-TEST-001&pin=P051982736Z",
+      "createdAt": "2026-10-21T20:59:23.473Z"
+    },
+    {
       "id": "sale-1792614450694",
       "orderId": "test-ord-1792614450673",
       "invoiceNumber": "INV-TEST-001",
@@ -858,21 +982,178 @@
   ],
   "tillSessions": [
     {
+      "id": "till-1792616363475",
+      "branchId": "branch-kilimani",
+      "terminalId": "POS-BAR-02",
+      "cashierId": "usr-brian",
+      "cashierName": "Brian Otieno",
+      "openingFloat": 7500,
+      "expectedCash": 7500,
+      "totalMpesa": 0,
+      "totalCard": 0,
+      "totalSales": 0,
+      "status": "OPEN",
+      "cashMovements": [],
+      "openedAt": "08:59 PM"
+    },
+    {
       "id": "till-session-klm-01",
       "branchId": "branch-kilimani",
       "terminalId": "term-cashier-01",
       "cashierId": "usr-brian",
       "cashierName": "Brian Otieno",
       "openingFloat": 5000,
-      "expectedCash": 18908,
-      "totalMpesa": 34400,
+      "expectedCash": 20662,
+      "totalMpesa": 35400,
       "totalCard": 14800,
-      "totalSales": 63108,
-      "status": "OPEN",
-      "openedAt": "Today, 08:00 AM"
+      "totalSales": 65312,
+      "status": "CLOSED",
+      "openedAt": "Today, 08:00 AM",
+      "cashMovements": [
+        {
+          "id": "cm-1792616363474",
+          "sessionId": "till-session-klm-01",
+          "type": "PAID_IN",
+          "amount": 1000,
+          "reason": "Emergency cash float top-up from safe",
+          "cashierId": "usr-brian",
+          "cashierName": "Brian Otieno",
+          "timestamp": "08:59 PM"
+        },
+        {
+          "id": "cm-1792616363474",
+          "sessionId": "till-session-klm-01",
+          "type": "PAID_OUT",
+          "amount": 450,
+          "reason": "Kitchen lemons & ice emergency purchase",
+          "cashierId": "usr-brian",
+          "cashierName": "Brian Otieno",
+          "timestamp": "08:59 PM"
+        }
+      ],
+      "closedAt": "2026-10-21T20:59:23.474Z",
+      "actualCashCount": 20612,
+      "cashDiscrepancy": -50
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1792616363475-677",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-brian",
+      "actorName": "Brian Otieno",
+      "actorRole": "CASHIER",
+      "action": "TILL_OPENED",
+      "entityType": "TILL_SESSION",
+      "entityId": "till-1792616363475",
+      "details": "Started shift with opening float of KES 7500 on terminal POS-BAR-02",
+      "timestamp": "2026-10-21T20:59:23.475Z"
+    },
+    {
+      "id": "aud-1792616363474-678",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-brian",
+      "actorName": "Brian Otieno",
+      "actorRole": "CASHIER",
+      "action": "TILL_CLOSED",
+      "entityType": "TILL_SESSION",
+      "entityId": "till-session-klm-01",
+      "details": "Closed till session. Expected: KES 20662, Counted: KES 20612, Discrepancy: KES -50. Notes: Evening shift closed. Minor KES 50 shortage due to coin change rounding.",
+      "timestamp": "2026-10-21T20:59:23.474Z"
+    },
+    {
+      "id": "aud-1792616363474-546",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-brian",
+      "actorName": "Brian Otieno",
+      "actorRole": "CASHIER",
+      "action": "CASH_PAID_IN",
+      "entityType": "TILL_SESSION",
+      "entityId": "till-session-klm-01",
+      "details": "Cash movement [PAID_IN] of KES 1000: Emergency cash float top-up from safe",
+      "timestamp": "2026-10-21T20:59:23.474Z"
+    },
+    {
+      "id": "aud-1792616363474-751",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-brian",
+      "actorName": "Brian Otieno",
+      "actorRole": "CASHIER",
+      "action": "CASH_PAID_OUT",
+      "entityType": "TILL_SESSION",
+      "entityId": "till-session-klm-01",
+      "details": "Cash movement [PAID_OUT] of KES 450: Kitchen lemons & ice emergency purchase",
+      "timestamp": "2026-10-21T20:59:23.474Z"
+    },
+    {
+      "id": "aud-1792616363473-915",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-brian",
+      "actorName": "Brian Otieno",
+      "actorRole": "CASHIER",
+      "action": "SALE_COMPLETED",
+      "entityType": "SALE",
+      "entityId": "sale-1792616363473",
+      "details": "Settled invoice INV-TEST-001 (eTIMS: ETIMS-DEMI-TEST-001), Grand Total: KES 2204",
+      "timestamp": "2026-10-21T20:59:23.473Z"
+    },
+    {
+      "id": "aud-1792616363473-302",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "TABLE_TRANSFERRED",
+      "entityType": "TABLE",
+      "entityId": "tbl-04",
+      "details": "Transferred active order from Table T-02 to Table T-04",
+      "timestamp": "2026-10-21T20:59:23.473Z"
+    },
+    {
+      "id": "aud-1792616363472-125",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "KOT_FIRED",
+      "entityType": "KOT",
+      "entityId": "test-ord-1792616363453",
+      "details": "Fired 2 KOT tickets to kitchen/bar for Table T-02",
+      "timestamp": "2026-10-21T20:59:23.472Z"
+    },
+    {
+      "id": "aud-1792616363454-966",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "ORDER_UPDATED",
+      "entityType": "ORDER",
+      "entityId": "test-ord-1792616363453",
+      "details": "Updated order ORD-TEST-01 (version 2), items: 2, total: 2206",
+      "timestamp": "2026-10-21T20:59:23.454Z"
+    },
+    {
+      "id": "aud-1792616363454-91",
+      "tenantId": "tenant-simba-01",
+      "branchId": "branch-kilimani",
+      "actorId": "usr-faith",
+      "actorName": "Faith Mwende",
+      "actorRole": "WAITER",
+      "action": "ORDER_CREATED",
+      "entityType": "ORDER",
+      "entityId": "test-ord-1792616363453",
+      "details": "Created new order ORD-TEST-01 on table T-02",
+      "timestamp": "2026-10-21T20:59:23.454Z"
+    },
     {
       "id": "aud-1792614450694-869",
       "tenantId": "tenant-simba-01",
@@ -1005,5 +1286,5 @@
     }
   ],
   "mpesaTransactions": [],
-  "syncSequence": 110
+  "syncSequence": 277
 }

@@ -167,6 +167,17 @@ export interface DbSale {
   createdAt: string;
 }
 
+export interface DbCashMovement {
+  id: string;
+  sessionId: string;
+  type: 'PAID_IN' | 'PAID_OUT';
+  amount: number;
+  reason: string;
+  cashierId: string;
+  cashierName: string;
+  timestamp: string;
+}
+
 export interface DbTillSession {
   id: string;
   branchId: string;
@@ -181,6 +192,7 @@ export interface DbTillSession {
   totalCard: number;
   totalSales: number;
   status: 'OPEN' | 'CLOSED';
+  cashMovements?: DbCashMovement[];
   openedAt: string;
   closedAt?: string;
 }

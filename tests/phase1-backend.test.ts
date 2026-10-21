@@ -247,6 +247,62 @@ async function runTests() {
   const lastAudit = auditLogs[0];
   assert(lastAudit.action === 'SALE_COMPLETED' && lastAudit.actorName === cashier!.name, 'Last audit log correctly records SALE_COMPLETED by Cashier');
 
+  // Test 8: Shift Lifecycle & Petty Cash Management
+  console.log('\nTest Group 8: Shift Lifecycle, Float & Petty Cash Movements');
+  const activeTillBeforeMovements = dbStore.getActiveTillSession()!;
+  const expectedBefore = activeTillBeforeMovements.expectedCash;
+
+  // Paid Out test
+  const paidOutRes = dbStore.recordCashMovement(
+    activeTillBeforeMovements.id,
+    'PAID_OUT',
+    450,
+    'Kitchen lemons & ice emergency purchase',
+    { id: cashier!.id, name: cashier!.name, role: cashier!.role }
+  );
+  assert(paidOutRes.success && paidOutRes.movement?.type === 'PAID_OUT', 'Petty Cash Paid-Out successfully recorded');
+  
+  // Paid In test
+  const paidInRes = dbStore.recordCashMovement(
+    activeTillBeforeMovements.id,
+    'PAID_IN',
+    1000,
+    'Emergency cash float top-up from safe',
+    { id: cashier!.id, name: cashier!.name, role: cashier!.role }
+  );
+  assert(paidInRes.success && paidInRes.movement?.type === 'PAID_IN', 'Cash Float Paid-In successfully recorded');
+
+  const activeTillAfterMovements = dbStore.getActiveTillSession()!;
+  assert(
+    activeTillAfterMovements.expectedCash === expectedBefore - 450 + 1000,
+    `Till expected cash updated precisely by net cash movements (expected: ${expectedBefore - 450 + 1000}, actual: ${activeTillAfterMovements.expectedCash})`
+  );
+  assert(
+    (activeTillAfterMovements.cashMovements?.length ?? 0) >= 2,
+    'Till session preserves complete cash movement history'
+  );
+
+  // Close shift (Z-Report with blind count)
+  const blindCashCounted = activeTillAfterMovements.expectedCash - 50; // 50 KES short
+  const closedSession = dbStore.closeTillSession(
+    activeTillAfterMovements.id,
+    blindCashCounted,
+    'Evening shift closed. Minor KES 50 shortage due to coin change rounding.',
+    { id: cashier!.id, name: cashier!.name, role: cashier!.role }
+  );
+  assert(closedSession !== undefined && closedSession.status === 'CLOSED', 'Shift successfully closed with Z-Report generated');
+  assert(closedSession?.cashDiscrepancy === -50, 'Blind cash drawer variance precisely computed (-50 KES discrepancy)');
+
+  // Open a new shift with fresh opening float
+  const newShiftSession = dbStore.openTillSession(
+    'POS-BAR-02',
+    7500,
+    { id: cashier!.id, name: cashier!.name, role: cashier!.role }
+  );
+  assert(newShiftSession !== undefined && newShiftSession.status === 'OPEN', 'New shift opened with status OPEN');
+  assert(newShiftSession.openingFloat === 7500, 'New shift initialized with KES 7,500 opening float');
+  assert(newShiftSession.expectedCash === 7500, 'Expected cash matches opening float on fresh shift');
+
   console.log('\n========================================');
   console.log(`TEST RESULTS: ${testPassed} PASSED, ${testFailed} FAILED`);
   console.log('========================================\n');

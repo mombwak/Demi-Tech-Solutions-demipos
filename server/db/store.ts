@@ -18,6 +18,7 @@ import {
   DbKotTicket,
   DbSale,
   DbTillSession,
+  DbCashMovement,
   DbAuditEvent,
   DbMpesaTransaction
 } from './schema';
@@ -782,7 +783,104 @@ class PosDatabaseStore {
     return true;
   }
 
-  public closeTillSession(sessionId: string, actualCount: number, actor?: { id: string; name: string; role: string }): DbTillSession | undefined {
+  public openTillSession(
+    terminalId: string,
+    openingFloat: number,
+    actor: { id: string; name: string; role: string; branchId?: string }
+  ): DbTillSession {
+    const existing = this.state.tillSessions.find(s => s.status === 'OPEN' && s.terminalId === terminalId);
+    if (existing) {
+      return existing;
+    }
+
+    const newSession: DbTillSession = {
+      id: `till-${Date.now()}`,
+      branchId: actor.branchId || this.state.branches[0].id,
+      terminalId,
+      cashierId: actor.id,
+      cashierName: actor.name,
+      openingFloat,
+      expectedCash: openingFloat,
+      totalMpesa: 0,
+      totalCard: 0,
+      totalSales: 0,
+      status: 'OPEN',
+      cashMovements: [],
+      openedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    this.state.tillSessions.unshift(newSession);
+
+    this.recordAudit({
+      actorId: actor.id,
+      actorName: actor.name,
+      actorRole: actor.role,
+      action: 'TILL_OPENED',
+      entityType: 'TILL_SESSION',
+      entityId: newSession.id,
+      details: `Started shift with opening float of KES ${openingFloat} on terminal ${terminalId}`
+    });
+
+    this.state.syncSequence++;
+    this.persist();
+    return newSession;
+  }
+
+  public recordCashMovement(
+    sessionId: string,
+    type: 'PAID_IN' | 'PAID_OUT',
+    amount: number,
+    reason: string,
+    actor: { id: string; name: string; role: string }
+  ): { success: boolean; session?: DbTillSession; movement?: DbCashMovement; error?: string } {
+    const session = this.state.tillSessions.find(s => s.id === sessionId && s.status === 'OPEN');
+    if (!session) {
+      return { success: false, error: 'Active shift session not found' };
+    }
+
+    const movement = {
+      id: `cm-${Date.now()}`,
+      sessionId,
+      type,
+      amount,
+      reason,
+      cashierId: actor.id,
+      cashierName: actor.name,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    if (!session.cashMovements) session.cashMovements = [];
+    session.cashMovements.unshift(movement);
+
+    if (type === 'PAID_IN') {
+      session.expectedCash += amount;
+    } else {
+      session.expectedCash -= amount;
+    }
+
+    this.recordAudit({
+      actorId: actor.id,
+      actorName: actor.name,
+      actorRole: actor.role,
+      action: `CASH_${type}`,
+      entityType: 'TILL_SESSION',
+      entityId: sessionId,
+      details: `Cash movement [${type}] of KES ${amount}: ${reason}`
+    });
+
+    this.state.syncSequence++;
+    this.persist();
+    return { success: true, session, movement };
+  }
+
+  public closeTillSession(
+    sessionId: string, 
+    actualCount: number, 
+    notesOrActor?: string | { id: string; name: string; role: string }, 
+    actorArg?: { id: string; name: string; role: string }
+  ): DbTillSession | undefined {
+    const notes = typeof notesOrActor === 'string' ? notesOrActor : undefined;
+    const actor = typeof notesOrActor === 'object' ? notesOrActor : actorArg;
     const session = this.state.tillSessions.find(s => s.id === sessionId);
     if (session) {
       session.status = 'CLOSED';
@@ -797,7 +895,7 @@ class PosDatabaseStore {
         action: 'TILL_CLOSED',
         entityType: 'TILL_SESSION',
         entityId: sessionId,
-        details: `Closed till session. Expected: KES ${session.expectedCash}, Counted: KES ${actualCount}, Discrepancy: KES ${session.cashDiscrepancy}`
+        details: `Closed till session. Expected: KES ${session.expectedCash}, Counted: KES ${actualCount}, Discrepancy: KES ${session.cashDiscrepancy}${notes ? `. Notes: ${notes}` : ''}`
       });
 
       this.state.syncSequence++;

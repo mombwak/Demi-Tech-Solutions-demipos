@@ -158,6 +158,28 @@ export const api = {
   },
 
   // --- Shift / Till Sessions ---
+  async openShift(openingFloat: number, terminalId?: string): Promise<TillSession> {
+    const res = await fetch('/api/v1/shifts/open', {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ opening_float: openingFloat, terminal_id: terminalId })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'Failed to open shift.');
+    return data.data;
+  },
+
+  async recordCashMovement(sessionId: string, type: 'PAID_IN' | 'PAID_OUT', amount: number, reason: string): Promise<TillSession> {
+    const res = await fetch('/api/v1/shifts/cash-movement', {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ session_id: sessionId, type, amount, reason })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'Failed to record cash movement.');
+    return data.data;
+  },
+
   async closeShift(sessionId: string, actualCashCount: number): Promise<TillSession> {
     const res = await fetch('/api/v1/shifts/close', {
       method: 'POST',

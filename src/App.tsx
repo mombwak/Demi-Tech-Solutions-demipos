@@ -11,13 +11,16 @@ import { RetailPos } from './components/retail/RetailPos';
 import { MultiTenderModal } from './components/payments/MultiTenderModal';
 import { ReceiptModal } from './components/payments/ReceiptModal';
 import { ZReportModal } from './components/reports/ZReportModal';
+import { StartShiftModal } from './components/reports/StartShiftModal';
+import { CashMovementModal } from './components/reports/CashMovementModal';
+import { TerminalLockScreen } from './components/common/TerminalLockScreen';
 import { PinModal } from './components/common/PinModal';
 import { DashboardView } from './components/reports/DashboardView';
 import { DiningTable, Order, Sale, OrderItem } from './types';
 
 const PosMainContent: React.FC = () => {
   const { operatingMode } = usePos();
-  const { isPinModalOpen, closePinModal } = useAuth();
+  const { isPinModalOpen, closePinModal, isLocked, unlockTerminal } = useAuth();
 
   // Active Interactive States
   const [selectedTable, setSelectedTable] = useState<DiningTable | null>(null);
@@ -27,11 +30,22 @@ const PosMainContent: React.FC = () => {
   const [splitPayShare, setSplitPayShare] = useState<{ amount: number; description: string } | null>(null);
   const [activeSaleReceipt, setActiveSaleReceipt] = useState<Sale | null>(null);
   const [isZReportOpen, setIsZReportOpen] = useState<boolean>(false);
+  const [isStartShiftOpen, setIsStartShiftOpen] = useState<boolean>(false);
+  const [isCashMovementOpen, setIsCashMovementOpen] = useState<boolean>(false);
+
+  // If POS Terminal is locked, display the high-security Touch PIN Lock Screen
+  if (isLocked) {
+    return <TerminalLockScreen onUnlock={unlockTerminal} />;
+  }
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-gray-100 font-sans">
       {/* Top Application Bar */}
-      <TopNav onOpenZReport={() => setIsZReportOpen(true)} />
+      <TopNav 
+        onOpenStartShift={() => setIsStartShiftOpen(true)}
+        onOpenCashMovement={() => setIsCashMovementOpen(true)}
+        onOpenZReport={() => setIsZReportOpen(true)} 
+      />
 
       {/* Main View Area */}
       <main className="flex-1 flex overflow-hidden">
@@ -132,6 +146,16 @@ const PosMainContent: React.FC = () => {
       {/* Z-Report / Cashier Blind Count Modal */}
       {isZReportOpen && (
         <ZReportModal onClose={() => setIsZReportOpen(false)} />
+      )}
+
+      {/* Start Shift Opening Float Modal */}
+      {isStartShiftOpen && (
+        <StartShiftModal onClose={() => setIsStartShiftOpen(false)} />
+      )}
+
+      {/* Cash Movement (Paid Out / Paid In) Modal */}
+      {isCashMovementOpen && (
+        <CashMovementModal onClose={() => setIsCashMovementOpen(false)} />
       )}
     </div>
   );

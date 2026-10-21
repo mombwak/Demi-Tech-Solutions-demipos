@@ -39,6 +39,9 @@ interface PosContextType {
   completeSale: (sale: Sale) => void;
   transferTable: (sourceTableId: string, targetTableId: string) => boolean;
   settleTableOrder: (tableId: string) => void;
+  openShift: (openingFloat: number, terminalId?: string) => Promise<void>;
+  recordCashMovement: (sessionId: string, type: 'PAID_IN' | 'PAID_OUT', amount: number, reason: string) => Promise<void>;
+  closeShift: (sessionId: string, actualCashCount: number) => Promise<TillSession>;
 }
 
 const PosContext = createContext<PosContextType | undefined>(undefined);
@@ -361,6 +364,56 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
   };
 
+  const openShift = async (openingFloat: number, terminalId?: string) => {
+    try {
+      const session = await api.openShift(openingFloat, terminalId);
+      setTillSession(session);
+    } catch {
+      // Offline fallback
+      setTillSession(prev => ({
+        ...prev,
+        openingFloat,
+        expectedCash: openingFloat,
+        totalMpesa: 0,
+        totalCard: 0,
+        totalSales: 0,
+        status: 'OPEN',
+        openedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }));
+    }
+  };
+
+  const recordCashMovement = async (sessionId: string, type: 'PAID_IN' | 'PAID_OUT', amount: number, reason: string) => {
+    try {
+      const session = await api.recordCashMovement(sessionId, type, amount, reason);
+      setTillSession(session);
+    } catch {
+      // Offline fallback
+      setTillSession(prev => ({
+        ...prev,
+        expectedCash: type === 'PAID_IN' ? prev.expectedCash + amount : prev.expectedCash - amount
+      }));
+    }
+  };
+
+  const closeShift = async (sessionId: string, actualCashCount: number): Promise<TillSession> => {
+    try {
+      const closed = await api.closeShift(sessionId, actualCashCount);
+      setTillSession(closed);
+      return closed;
+    } catch {
+      const closed: TillSession = {
+        ...tillSession,
+        status: 'CLOSED',
+        actualCashCount,
+        cashDiscrepancy: actualCashCount - tillSession.expectedCash,
+        closedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setTillSession(closed);
+      return closed;
+    }
+  };
+
   return (
     <PosContext.Provider
       value={{
@@ -382,6 +435,9 @@ export const PosProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         completeSale,
         transferTable,
         settleTableOrder,
+        openShift,
+        recordCashMovement,
+        closeShift,
       }}
     >
       {children}
